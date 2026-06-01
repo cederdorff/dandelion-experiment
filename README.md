@@ -60,6 +60,39 @@ Then:
 Webcam access works on `localhost` or `127.0.0.1`. Opening `index.html`
 directly will usually block the camera.
 
+## Publish with GitHub Pages
+
+This project includes a GitHub Actions workflow that can publish the app to
+GitHub Pages.
+
+After you have pushed your project to GitHub:
+
+1. Open your repository on GitHub.
+2. Go to `Settings`.
+3. Go to `Pages`.
+4. Under `Build and deployment`, set `Source` to `GitHub Actions`.
+5. Go to the `Actions` tab.
+6. Open the workflow called `Deploy to GitHub Pages`.
+7. Wait for the workflow to finish.
+
+After the workflow finishes, your project will usually be available at:
+
+```text
+https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY-NAME/
+```
+
+The workflow file is:
+
+```text
+.github/workflows/deploy.yml
+```
+
+It runs `npm ci`, builds the Vite app with `npm run build`, and uploads the
+`dist` folder to GitHub Pages.
+
+The Vite base path is set automatically during the GitHub Actions build, so the
+site should still work if your repository has a different name.
+
 ## What to Try
 
 Start with one hand clearly visible in the webcam. Move slowly at first, then
