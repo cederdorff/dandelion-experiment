@@ -14,6 +14,24 @@ The prototype is built for fast experimentation:
 - pinch to pull loose seeds back toward your fingers,
 - reset the bloom from the stage.
 
+## Screenshots
+
+### Start State
+
+![Start state](public/screenshots/start.png)
+
+### Dandelion Interaction
+
+![Dandelion interaction](public/screenshots/dandelion.png)
+
+### Dandelion Interaction (Alt)
+
+![Dandelion interaction alternative](public/screenshots/dandelion-2.png)
+
+### Camera Permission Prompt
+
+![Camera permission prompt](public/screenshots/camera-permission.png)
+
 ## Create Your Own Copy
 
 Open the template:
@@ -59,39 +77,6 @@ Then:
 
 Webcam access works on `localhost` or `127.0.0.1`. Opening `index.html`
 directly will usually block the camera.
-
-## Publish with GitHub Pages
-
-This project includes a GitHub Actions workflow that can publish the app to
-GitHub Pages.
-
-After you have pushed your project to GitHub:
-
-1. Open your repository on GitHub.
-2. Go to `Settings`.
-3. Go to `Pages`.
-4. Under `Build and deployment`, set `Source` to `GitHub Actions`.
-5. Go to the `Actions` tab.
-6. Open the workflow called `Deploy to GitHub Pages`.
-7. Wait for the workflow to finish.
-
-After the workflow finishes, your project will usually be available at:
-
-```text
-https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPOSITORY-NAME/
-```
-
-The workflow file is:
-
-```text
-.github/workflows/deploy.yml
-```
-
-It runs `npm ci`, builds the Vite app with `npm run build`, and uploads the
-`dist` folder to GitHub Pages.
-
-The Vite base path is set automatically during the GitHub Actions build, so the
-site should still work if your repository has a different name.
 
 ## What to Try
 
