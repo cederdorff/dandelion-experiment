@@ -1,5 +1,5 @@
 :root {
-  --bg: #f6f7f3;
+  --bg: #f4f5ef;
   --panel: #ffffff;
   --line: #d9ddd3;
   --text: #3e4540;
@@ -19,7 +19,7 @@
 
   color: var(--text);
   background:
-    linear-gradient(180deg, rgba(31, 187, 166, 0.06), transparent 360px),
+    linear-gradient(180deg, rgba(107, 151, 91, 0.12), transparent 360px),
     var(--bg);
   font-family: var(--font-main);
   font-size: 16px;

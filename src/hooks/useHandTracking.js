@@ -6,12 +6,17 @@ import {
   drawHand,
   resizeCanvasToVideo,
 } from '../handTracking'
-import { getHandGesture, movePuckWithGesture } from '../gestures'
+import {
+  clearDandelionInteraction,
+  createDandelionInteraction,
+  getHandGesture,
+  updateDandelionWithGesture,
+} from '../gestures'
 
 export function useHandTracking() {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
-  const puckRef = useRef(null)
+  const interactionRef = useRef(createDandelionInteraction())
   const handLandmarkerRef = useRef(null)
   const animationRef = useRef(0)
   const lastVideoTimeRef = useRef(-1)
@@ -26,7 +31,7 @@ export function useHandTracking() {
     lastVideoTimeRef.current = -1
 
     clearCanvas(canvasRef.current)
-    showSearchingPuck(puckRef.current)
+    clearDandelionInteraction(interactionRef.current)
     setIsRunning(false)
     setTracking(READY_STATUS)
   }
@@ -34,10 +39,9 @@ export function useHandTracking() {
   function runFrameLoop() {
     const video = webcamRef.current?.video
     const canvas = canvasRef.current
-    const puck = puckRef.current
     const handLandmarker = handLandmarkerRef.current
 
-    if (!video || !canvas || !puck || !handLandmarker) {
+    if (!video || !canvas || !handLandmarker) {
       return
     }
 
@@ -52,11 +56,11 @@ export function useHandTracking() {
         drawHand(canvas, landmarks)
         const gesture = getHandGesture(landmarks)
 
-        movePuckWithGesture(gesture, puck)
+        updateDandelionWithGesture(gesture, interactionRef.current)
         setTracking(createTrackingStatus(results, gesture))
       } else {
         clearCanvas(canvas)
-        showSearchingPuck(puck)
+        clearDandelionInteraction(interactionRef.current)
         setTracking(createSearchingStatus())
       }
     }
@@ -106,7 +110,7 @@ export function useHandTracking() {
   }
 
   useEffect(() => {
-    showSearchingPuck(puckRef.current)
+    clearDandelionInteraction(interactionRef.current)
 
     return () => {
       cancelAnimationFrame(animationRef.current)
@@ -118,9 +122,9 @@ export function useHandTracking() {
     canvasRef,
     handleCameraError,
     handleCameraReady,
+    interactionRef,
     isLoading: tracking.mode === 'loading',
     isRunning,
-    puckRef,
     startCamera,
     stopCamera,
     tracking,
@@ -136,11 +140,6 @@ function hasNewVideoFrame(video, lastVideoTime) {
   )
 }
 
-function showSearchingPuck(puck) {
-  puck?.setAttribute('data-searching', 'true')
-  puck?.removeAttribute('data-gripped')
-}
-
 function createSearchingStatus() {
   return {
     ...READY_STATUS,
@@ -154,12 +153,25 @@ function createTrackingStatus(results, gesture) {
 
   return {
     mode: 'tracking',
-    label: gesture.isPinching ? 'Pinch active' : gesture.name,
+    label: getTrackingLabel(gesture),
     hand: hand?.categoryName ?? 'Hand',
     confidence: hand?.score ?? gesture.grip,
     gesture: gesture.name,
     pinching: gesture.isPinching,
+    wind: gesture.wind,
   }
+}
+
+function getTrackingLabel(gesture) {
+  if (gesture.isPinching) {
+    return 'Pinch pull'
+  }
+
+  if (gesture.isOpenHand) {
+    return 'Wind hand'
+  }
+
+  return 'Finger brush'
 }
 
 function createErrorStatus(label) {

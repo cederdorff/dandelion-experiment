@@ -1,18 +1,20 @@
 import Webcam from "react-webcam";
 import { VIDEO_CONSTRAINTS } from "../handTracking";
+import { DandelionField } from "./DandelionField";
 
 export function TrackingStage({
   canvasRef,
+  interactionRef,
   onCameraError,
   onCameraReady,
   isLoading,
   isRunning,
   onStartCamera,
-  puckRef,
   webcamRef
 }) {
   return (
     <div className="stage" data-running={isRunning ? "true" : "false"}>
+      <DandelionField interactionRef={interactionRef} />
       {isRunning && (
         <Webcam
           ref={webcamRef}
@@ -25,9 +27,6 @@ export function TrackingStage({
         />
       )}
       <canvas ref={canvasRef} className="landmark-layer" aria-hidden="true" />
-      <div ref={puckRef} className="control-object" role="img" aria-label="Puck">
-        <span></span>
-      </div>
 
       {!isRunning && (
         <div className="start-overlay">

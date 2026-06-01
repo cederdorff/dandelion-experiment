@@ -11,7 +11,7 @@ function App() {
     handleCameraReady,
     isLoading,
     isRunning,
-    puckRef,
+    interactionRef,
     startCamera,
     stopCamera,
     tracking,
@@ -22,8 +22,8 @@ function App() {
     <main className="app-shell">
       <header className="topbar">
         <div>
-          <p className="eyebrow">Webcam control</p>
-          <h1>Hand Puck</h1>
+          <p className="eyebrow">Interactive installation study</p>
+          <h1>Dandelion Field</h1>
         </div>
         <StatusPill mode={tracking.mode} label={tracking.label} />
       </header>
@@ -31,12 +31,12 @@ function App() {
       <section className="workspace" aria-label="Hand controlled object">
         <TrackingStage
           canvasRef={canvasRef}
+          interactionRef={interactionRef}
           onCameraError={handleCameraError}
           onCameraReady={handleCameraReady}
           isLoading={isLoading}
           isRunning={isRunning}
           onStartCamera={startCamera}
-          puckRef={puckRef}
           webcamRef={webcamRef}
         />
 

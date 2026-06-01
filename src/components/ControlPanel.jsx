@@ -4,7 +4,8 @@ export function ControlPanel({ isLoading, isRunning, onStartCamera, onStopCamera
       <Metric label="Hand" value={tracking.hand} />
       <Metric label="Gesture" value={tracking.gesture} />
       <Metric label="Confidence" value={formatPercent(tracking.confidence)} />
-      <Metric label="Pinch" value={tracking.pinching ? "Active" : "Idle"} />
+      <Metric label="Wind" value={formatPercent(tracking.wind)} />
+      <Metric label="Pinch" value={tracking.pinching ? "Pulling" : "Idle"} />
 
       <button
         type="button"

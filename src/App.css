@@ -85,77 +85,80 @@ h1 {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    #151514;
-  background-size: 36px 36px;
+  background: #151a16;
   box-shadow: var(--shadow);
+  touch-action: none;
 }
 
+.dandelion-field,
+.dandelion-field canvas,
 .webcam-feed,
 .landmark-layer {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+.dandelion-field {
+  z-index: 2;
+  overflow: hidden;
+}
+
+.dandelion-field canvas {
+  display: block;
+}
+
+.webcam-feed,
+.landmark-layer {
   object-fit: cover;
   transform: scaleX(-1);
 }
 
 .webcam-feed {
-  opacity: 0.86;
+  z-index: 1;
+  opacity: 0.11;
+  filter: grayscale(1) contrast(1.25);
+  mix-blend-mode: screen;
 }
 
 .landmark-layer {
-  pointer-events: none;
-}
-
-.control-object {
-  --x: 50%;
-  --y: 50%;
-  --scale: 1;
-  --rotate: 0deg;
-
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
   z-index: 3;
-  width: clamp(54px, 7vw, 86px);
-  aspect-ratio: 1;
-  border: 2px solid rgba(255, 255, 255, 0.86);
-  border-radius: 18px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.72), transparent 38%),
-    linear-gradient(135deg, var(--teal), var(--coral));
-  box-shadow:
-    0 18px 36px rgba(0, 0, 0, 0.36),
-    0 0 0 9px rgba(41, 210, 178, 0.14);
-  opacity: 1;
-  transform: translate(-50%, -50%) rotate(var(--rotate)) scale(var(--scale));
-  transition:
-    opacity 160ms ease,
-    box-shadow 160ms ease,
-    filter 160ms ease;
-  will-change: left, top, transform;
+  pointer-events: none;
+  opacity: 0.52;
 }
 
-.control-object span {
+.reset-bloom {
   position: absolute;
-  inset: 16%;
-  border: 2px solid rgba(255, 255, 255, 0.72);
-  border-radius: 10px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+  min-height: 38px;
+  padding: 0 13px;
+  border: 1px solid rgba(238, 232, 204, 0.32);
+  border-radius: 8px;
+  background: rgba(18, 22, 18, 0.72);
+  color: #f8f0d0;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
 }
 
-.control-object[data-searching] {
-  opacity: 0.42;
-  filter: saturate(0.65);
+.reset-bloom:hover {
+  transform: translateY(-1px);
+  border-color: rgba(248, 240, 208, 0.62);
+  background: rgba(37, 45, 33, 0.82);
 }
 
-.control-object[data-gripped] {
-  box-shadow:
-    0 18px 36px rgba(0, 0, 0, 0.38),
-    0 0 0 14px rgba(255, 184, 77, 0.2);
+.reset-bloom:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
 }
 
 .start-overlay {
@@ -164,8 +167,8 @@ h1 {
   z-index: 4;
   display: grid;
   place-items: center;
-  background: rgba(21, 21, 20, 0.58);
-  backdrop-filter: blur(3px);
+  background: rgba(21, 21, 20, 0.14);
+  pointer-events: none;
 }
 
 .start-overlay button,
@@ -187,6 +190,7 @@ h1 {
 .start-overlay button {
   min-width: 168px;
   padding: 0 22px;
+  pointer-events: auto;
 }
 
 .start-overlay button:hover,
@@ -215,7 +219,7 @@ h1 {
   box-shadow: var(--shadow-soft);
   padding: 16px;
   display: grid;
-  grid-template-rows: repeat(4, minmax(72px, auto)) 1fr;
+  grid-template-rows: repeat(5, minmax(62px, auto)) 1fr;
   gap: 10px;
 }
 
@@ -270,7 +274,7 @@ h1 {
   }
 
   .control-panel {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     grid-template-rows: auto auto;
   }
 
