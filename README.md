@@ -5,8 +5,7 @@ the YOKE/Sennep Dandelion installation:
 
 [yoke.dk/projects/dandelion](https://www.yoke.dk/projects/dandelion)
 
-Instead of moving a puck, your fingertip and hand movement bend and release
-digital dandelion seeds.
+Your fingertip and hand movement bend and release digital dandelion seeds.
 
 The prototype is built for fast experimentation:
 
