@@ -14,23 +14,7 @@ The prototype is built for fast experimentation:
 - pinch to pull loose seeds back toward your fingers,
 - reset the bloom from the stage.
 
-## Screenshots
-
-### Start State
-
-![Start state](public/screenshots/start.png)
-
-### Dandelion Interaction
-
-![Dandelion interaction](public/screenshots/dandelion.png)
-
-### Dandelion Interaction (Alt)
-
 ![Dandelion interaction alternative](public/screenshots/dandelion-2.png)
-
-### Camera Permission Prompt
-
-![Camera permission prompt](public/screenshots/camera-permission.png)
 
 ## Create Your Own Copy
 
@@ -67,6 +51,10 @@ Open the local URL shown in the terminal, usually:
 http://localhost:5173/
 ```
 
+You should see the app in its ready state before starting the camera:
+
+![Start state](public/screenshots/start.png)
+
 Then:
 
 1. Click `Start camera` and allow webcam access.
@@ -75,6 +63,10 @@ Then:
 4. Open your hand to release seeds faster.
 5. Pinch your thumb and index finger to pull drifting seeds.
 
+If your browser asks for camera permission, allow access for `localhost`:
+
+![Camera permission prompt](public/screenshots/camera-permission.png)
+
 Webcam access works on `localhost` or `127.0.0.1`. Opening `index.html`
 directly will usually block the camera.
 
@@ -82,6 +74,12 @@ directly will usually block the camera.
 
 Start with one hand clearly visible in the webcam. Move slowly at first, then
 try different distances from the camera to see how the dandelion reacts.
+
+Example interaction states:
+
+![Dandelion interaction](public/screenshots/dandelion.png)
+
+![Dandelion interaction alternative](public/screenshots/dandelion-2.png)
 
 The control panel shows the detected hand, gesture, tracking confidence, wind
 strength, and pinch state.
