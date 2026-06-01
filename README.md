@@ -176,21 +176,111 @@ Good places to tweak:
 
 ## Customization Ideas
 
-Here are some simple changes to try:
+This section is written as a mini workshop for students. Pick one idea, test it,
+and commit before you try the next one.
 
-- Make a single large dandelion instead of three smaller ones.
-- Change the background color or make it feel like night, spring, or a screen in
-  a museum.
-- Make the seeds release more slowly by increasing `resistance`.
-- Make the seeds float longer by changing the movement in `updateLooseSeed`.
-- Change the gesture so only an open hand releases seeds.
-- Remove the control panel when you want a cleaner installation look.
-- Add more blooms with different sizes and positions.
-- Change the reset button text.
+Quick student workflow:
 
-Challenge ideas:
+1. Make one small change.
 
-- Make the dandelion slowly grow back after seeds have flown away.
-- Make released seeds fade out over time.
-- Make the flower bend toward or away from the hand.
-- Create a different plant, such as grass, leaves, or falling petals.
+- Change only one number or one condition at a time.
+- Keep a quick note of the old value and new value.
+
+2. Run `npm run dev` and test in the browser.
+
+- Test with the same hand movement each time so results are comparable.
+
+3. If the behavior is worse, undo that one change.
+
+- Use undo immediately so you do not stack multiple confusing edits.
+
+4. Write a short note about what you learned.
+
+- Example: "Lower resistance from 0.48 to 0.30 made release too easy."
+
+### Level 1 (easy wins)
+
+- Make one large bloom instead of three by editing `BLOOMS` in
+  `src/components/DandelionField.jsx`.
+  - Help: start by deleting one bloom entry, then scale another bloom up.
+  - Check: you should still see stable animation and at least one full flower.
+- Adjust release difficulty by changing `resistance` values in
+  `createScene` (`src/components/DandelionField.jsx`).
+  - Help: lower values to make release easier, raise values to make it harder.
+  - Check: brushing should feel noticeably easier or harder within 10 seconds.
+- Change the atmosphere by tweaking colors in `drawBackdrop`
+  (`src/components/DandelionField.jsx`).
+  - Help: change one color stop first before changing all colors.
+  - Check: background mood changes but flower and seeds remain visible.
+- Update UI labels such as the reset button text in `src/App.css` and
+  component markup.
+  - Help: prefer short labels so buttons keep a clean layout.
+  - Check: text is readable on desktop and mobile widths.
+
+### Level 2 (interaction tuning)
+
+- Make seeds float longer by adjusting speed decay and drift in
+  `updateLooseSeed` (`src/components/DandelionField.jsx`).
+  - Help: make small edits (about 10-20%) instead of large jumps.
+  - Check: released seeds stay alive longer without looking frozen.
+- Change how strong the hand feels by tuning `interaction.force` in
+  `updateDandelionWithGesture` (`src/gestures.js`).
+  - Help: keep a minimum force so the interaction never feels dead.
+  - Check: closed hand is gentle, active gestures are clearly stronger.
+- Make pinch less sensitive by changing the grip threshold near
+  `const isPinching = grip > 0.6` in `src/gestures.js`.
+  - Help: try values between `0.55` and `0.75` and compare.
+  - Check: accidental pinches happen less often while intentional pinches still work.
+
+### Fun challenge: only an open hand releases seeds
+
+Goal: pointing and pinching can still track, but seed release should happen only
+when the hand is open.
+
+Suggested steps:
+
+1. Open `src/gestures.js` and find `updateDandelionWithGesture`.
+
+- Help: read from top to bottom once before editing so you understand all outputs.
+
+2. Gate force so closed hands stay gentle. For example, compute a base force from
+   movement, then add strong release force only when `gesture.isOpenHand` is
+   `true`.
+
+- Help: keep base force small so tracking still feels alive.
+
+3. In `getHandGesture`, you can reduce wind from pinch by removing or lowering the
+   `grip * 0.22` contribution in `wind`.
+
+- Help: lower in small steps (for example `0.22 -> 0.15 -> 0.08`).
+
+4. Test these cases:
+   - Closed hand: tracks, but very little release.
+   - Pointing up: mostly positioning, low release.
+   - Open hand: strong release effect.
+
+- Help: test each case for at least 5 seconds and compare confidence values.
+
+If you want an even stricter version, in `src/components/DandelionField.jsx`
+inside `applyBloomInfluence`, require `interaction.isOpenHand` in the release
+condition before `releaseSeed(...)` is called.
+
+### Level 3 (creative challenges)
+
+- Regrow the dandelion over time after seeds are released.
+  - Start idea: give each seed a cooldown timer, then reattach it.
+- Make released seeds fade out with age.
+  - Start idea: reduce alpha based on `(time - releaseAt)`.
+- Bend stems toward or away from the hand position.
+  - Start idea: map hand distance to a small stem angle offset.
+- Replace the dandelion with another plant system (grass, leaves, petals).
+  - Start idea: keep the same interaction model and only swap drawing functions.
+
+### Debug tips for students
+
+- If nothing happens, check camera permission first.
+- Watch the control panel while testing so you can see gesture, confidence, and
+  pinch/open-hand state.
+- If behavior is noisy, lower sensitivity values before changing animation logic.
+- If tracking lags, move closer to even lighting and reduce fast hand motion.
+- If changes break the app, return to the last working edit and retry smaller steps.
